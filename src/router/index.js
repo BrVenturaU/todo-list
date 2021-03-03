@@ -19,21 +19,25 @@ const routes = [
     component: Home,
     children:[
       {
+        // http://localhost:8080/#/
         path: '',
         name: 'Dashboard',
         component: Dashboard,
       },
       {
+        // http://localhost:8080/#/show/id (numero)
         path: 'show/:id',
         name: 'ShowTask',
         component: ShowTask,
       },
       {
+        // http://localhost:8080/#/edit/id (numero)
         path: 'edit/:id',
         name: 'EditTask',
         component: EditTask,
       },
       {
+        // http://localhost:8080/#/create
         path: 'create',
         name: 'CreateTask',
         component: CreateTask,
@@ -51,10 +55,12 @@ const routes = [
     component: Auth,
     children:[
       {
+        // http://localhost:8080/#/auth
         path: '',
         name: 'Login',
         component: Login,
       },
+      // http://localhost:8080/#/auth/register
       {
         path: 'register',
         name: 'Register',
