@@ -7,8 +7,7 @@
 
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item :to="{}">Link #1</b-nav-item>
-                <b-nav-item :to="{}">Link #2</b-nav-item>
+                <b-nav-item :to="{name:'Home'}">Inicio</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
