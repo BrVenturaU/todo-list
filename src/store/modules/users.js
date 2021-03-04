@@ -3,8 +3,12 @@ import router from '@/router'
 export default{
     namespaced:true,
     state: {
+        user: {}
     },
     mutations: {
+        SET_USER_PROFILE(state, user){
+            state.user = user;
+        }
     },
     actions: {
         async createUser({dispatch }, userData){
@@ -16,12 +20,17 @@ export default{
                     nombre: userData.nombre,
                     email: userData.email
                 });
-                console.log(user);
-                router.replace({name: 'Home'})
+                // console.log(user);
+                dispatch('getUserProfile', user.uid);
             } catch (error) {
                 console.log(error.message);
                 alert(error.message);
             }
+        },
+        async getUserProfile({commit}, uid){
+            const user = await fb.usersCollection.doc(uid).get();
+            commit('SET_USER_PROFILE', user.data());
+            router.replace({name: 'Home'});
         }
     }
 }

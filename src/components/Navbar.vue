@@ -19,7 +19,7 @@
                 <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
                 <template #button-content>
-                    <em>Usuario</em>
+                    <em>{{user.nombre}}</em>
                 </template>
                 <b-dropdown-item href="#">Perfil</b-dropdown-item>
                 <b-dropdown-item href="#">Cerrar sesión</b-dropdown-item>
@@ -31,8 +31,12 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
-    name: 'Navbar'
+    name: 'Navbar',
+    computed:{
+        ...mapState('users', ['user'])
+    }
 }
 </script>
 
