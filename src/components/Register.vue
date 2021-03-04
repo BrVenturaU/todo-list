@@ -14,7 +14,7 @@
                     class="mx-auto p-4 shadow"
                 >
                 <b-icon icon="person-fill" class="rounded-circle bg-primary p-3 d-block mx-auto person-fill--icon" variant="light"></b-icon>
-                    <b-form>
+                    <b-form @submit.prevent="registerUser">
                         <b-form-group
                             id="input-group-nombre"
                             label="Nombre:"
@@ -24,6 +24,7 @@
                             id="nombre"
                             type="text"
                             placeholder="Ingresa tu nombre..."
+                            v-model="user.nombre"
                             required
                             ></b-form-input>
                         </b-form-group>
@@ -36,6 +37,7 @@
                             id="email"
                             type="email"
                             placeholder="Ingresa tu correo electrónico..."
+                            v-model="user.email"
                             required
                             ></b-form-input>
                         </b-form-group>
@@ -48,6 +50,7 @@
                             id="password"
                             type="password"
                             placeholder="Ingresa tu contraseña..."
+                            v-model="user.password"
                             required
                             ></b-form-input>
                         </b-form-group>
@@ -63,8 +66,29 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
-    name: 'Register'
+    name: 'Register',
+    data() {
+        return {
+            user:{
+                nombre: '',
+                email: '',
+                password: ''
+            }
+        }
+    },
+    computed:{
+
+    },
+    methods:{
+        ...mapActions('users', ['createUser']),
+        registerUser(){
+            console.log(this.user.email)
+            this.createUser(this.user);
+        }
+
+    }
 }
 </script>
 
