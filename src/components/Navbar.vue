@@ -27,14 +27,18 @@
 </template>
 
 <script>
+import {auth} from '@/firebase/firebase'
 import {mapState, mapActions} from 'vuex';
 export default {
     name: 'Navbar',
     computed:{
         ...mapState('users', ['user'])
     },
+    created(){
+        this.getUserProfile(auth.currentUser.uid);
+    },
     methods:{
-        ...mapActions('users', ['logout'])
+        ...mapActions('users', ['logout', 'getUserProfile'])
     }
 }
 </script>
