@@ -48,6 +48,9 @@
 </template>
 
 <script>
+//Importar firebase a mi componente
+import * as fb from '@/firebase/firebase' 
+
 export default {
     name:'CreateTask',
     props: [],
@@ -63,6 +66,16 @@ export default {
           { status:  true , name: 'Activa' },
           { status:  false, name: 'Inactiva' }
         ]
+      }
+    },
+    //agrega metodo para crear documentos en firestore
+    methods: {
+      addTask(){
+        fb.taskCollection.doc().set({
+          titulo: name,
+          descripcion: this.description,
+          estado: this.selected
+        });
       }
     }
 }
