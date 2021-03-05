@@ -28,9 +28,14 @@ export default{
             }
         },
         async getUserProfile({commit}, uid){
-            const user = await fb.usersCollection.doc(uid).get();
-            commit('SET_USER_PROFILE', user.data());
-            router.replace({name:'Dashboard'});
+            try {
+                const user = await fb.usersCollection.doc(uid).get();
+                commit('SET_USER_PROFILE', user.data());
+                router.replace({name:'Dashboard'});
+            } catch (error) {
+                alert("Ha ocurrido un error.")
+                console.log(error.message);
+            }
         },
         async logout({commit}){
             try {
@@ -39,6 +44,7 @@ export default{
                 commit('SET_USER_PROFILE', {});
                 router.replace({name:'Login'});
             } catch (error) {
+                alert("Ha ocurrido un error.")
                 console.log(error.message);
             }
         }
