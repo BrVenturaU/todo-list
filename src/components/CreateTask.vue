@@ -70,12 +70,18 @@ export default {
     },
     //agrega metodo para crear documentos en firestore
     methods: {
-      addTask(){
-        fb.taskCollection.doc().set({
-          titulo: this.name,
-          descripcion: this.description,
-          estado: this.selected
-        });
+      async addTask(){
+        try {
+            await fb.taskCollection.doc().set({
+            titulo: this.name,
+            descripcion: this.description,
+            estado: this.selected
+          });
+          this.$emit('createdTask', true);
+        } catch (error) {
+          alert("No se ha podido crear su tarea.")
+          console.log(error.message);
+        }
       }
     }
 }
