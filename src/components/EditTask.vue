@@ -9,7 +9,7 @@
                         <label>Titulo tarea:</label>
                       </b-col>
                       <b-col sm="10">
-                        <b-form-input v-model="titulo" placeholder="Titulo de la tarea"></b-form-input>
+                        <b-form-input v-model="tarea.titulo" placeholder="Titulo de la tarea"></b-form-input>
                       </b-col>
                   </b-row>
                   <b-row class="my-1">
@@ -17,13 +17,13 @@
                         <label>Descripción:</label>
                       </b-col>
                       <b-col sm="10">
-                        <b-form-textarea v-model="descripcion" placeholder="Descripción"
+                        <b-form-textarea v-model="tarea.descripcion" placeholder="Descripción"
                         rows="3" max-rows="6"></b-form-textarea>
                       </b-col>
                   </b-row>
                   <b-row class="mt-4">
                     <b-col sm="10">
-                        <b-button type="button" variant="primary" @click="addTask()">Crear tarea</b-button>
+                        <b-button type="button" variant="primary" @click="updateTask()">Actualizar tarea</b-button>
                       </b-col>
                   </b-row>
                 </b-form>
@@ -41,47 +41,45 @@ export default {
 
 <script>
 
-
+import {taskCollection} from '@/firebase/firebase'
 export default {
   name: 'EditTask',
   props: {
+    id: String
   },
   data () {
       return {
-        titulo: '',
-        descripcion: '',
-        estado: false ,
-        options: [
-          { status:  true , name: 'Activa' },
-          { status:  false, name: 'Inactiva' }
-        ]
+        tarea:{
+          titulo: '',
+          descripcion: '',
+          estado: true
+        }
       }
     },
+    created(){
+      let vm = this
+      taskCollection.doc(this.id).get()
+        .then(response => {
+          let task = response.data();
+          vm.tarea.titulo = task.titulo;
+          vm.tarea.descripcion = task.descripcion;
+          vm.tarea.estado = task.estado;
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    },
   methods:{
-   
-      agregarDato(){
-                    this.arreglo.push({
-                       id:this.id++, nombre: this.nombre, descripcion: this.descripcion
-                    });
-                },
-      actualizar(registro_id){
-        //rellenar los campos
-        this.idActualizar= registro_id;
-        this.nuevoNombre=this.arreglo[registro_id].nombre;
-        this.nuevaDescripcion=this.arreglo[registro_id].descripcion;
-        this.actualizarF=true;
-      },
-      guardarActualizacion(registro_id){
-        this.actualizarF=false;
-        this.arreglo[registro_id].nombre= this.nuevoNombre,
-        this.arreglo[registro_id].descripcion= this.nuevaDescripcion
-      },
-     eliminar(registro_id){
-       //borrar elemento de la lista
-        this.arreglo.splice(registro_id, 1);
-     }
-
-},
+    async updateTask(){
+      try {
+        await taskCollection.doc(this.id).set(this.tarea);
+        this.$emit('updatedTask', true)
+      } catch (error) {
+        alert("No se pudo actualizar la tarea.")
+        console.log(error.message);
+      }
+    }
+  },
 
 }
 </script>
