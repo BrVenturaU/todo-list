@@ -40,7 +40,7 @@
                         <h4 class="card-title">{{tarea.titulo}}</h4>
                         <p class="card-text"><strong>Descripción:</strong> {{tarea.descripcion}}</p><br>
                         <h6 v-if="tarea.estado">
-                            Completa
+                            <b-alert show variant="success">Completada</b-alert>
                         </h6>
                     </div>
                     <div class="col col-2 mt-5">
