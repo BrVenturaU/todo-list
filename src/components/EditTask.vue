@@ -73,7 +73,8 @@ export default {
     async updateTask(){
       try {
         await taskCollection.doc(this.id).set(this.tarea);
-        this.$emit('updatedTask', true)
+        this.$emit('updatedTask', true);
+        alert(`Tarea "${this.tarea.titulo}" actualizada`);
       } catch (error) {
         alert("No se pudo actualizar la tarea.")
         console.log(error.message);

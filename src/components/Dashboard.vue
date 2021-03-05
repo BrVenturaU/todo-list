@@ -84,7 +84,7 @@
                                 
                             <b-modal :id="`modal-edit-${tarea.id}`" :ref="`modal-edit-${tarea.id}`"
                                 hide-footer :title="`Editar a: ${tarea.titulo}`" size="lg">
-                                    <EditTask :id="tarea.id" @updatedTask="hideModal(`modal-edit-${tarea.id}`)"  />
+                                    <EditTask :id="tarea.id" @updatedTask="getTasks()"  />
                             </b-modal>
                         </div>
                     </div>
