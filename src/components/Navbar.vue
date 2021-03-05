@@ -9,8 +9,11 @@
             <b-navbar-nav>
                 <b-nav-item :to="{name:'Dashboard'}">Inicio</b-nav-item>
             </b-navbar-nav>
-              <b-navbar-nav>
+            <b-navbar-nav>
                 <b-nav-item :to="{name:'EditTask'}">Editar</b-nav-item>
+            </b-navbar-nav>
+            <b-navbar-nav>
+                <b-nav-item :to="{name:'CreateTask'}">Tarea</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -25,7 +28,7 @@
                     <em>{{user.nombre}}</em>
                 </template>
                 <b-dropdown-item href="#">Perfil</b-dropdown-item>
-                <b-dropdown-item href="#">Cerrar sesión</b-dropdown-item>
+                <b-dropdown-item @click="logout">Cerrar sesión</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>
             </b-collapse>
@@ -34,11 +37,14 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 export default {
     name: 'Navbar',
     computed:{
         ...mapState('users', ['user'])
+    },
+    methods:{
+        ...mapActions('users', ['logout'])
     }
 }
 </script>
