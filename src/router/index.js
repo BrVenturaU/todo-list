@@ -5,7 +5,6 @@ import Home from '@/views/Home.vue'
 import Dashboard from '@/components/Dashboard.vue'
 import ShowTask from '@/components/ShowTask.vue'
 import EditTask from '@/components/EditTask.vue'
-import CreateTask from '@/components/CreateTask.vue'
 import Auth from '@/views/Auth.vue'
 import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
@@ -46,15 +45,6 @@ const routes = [
           requiresAuth: true
         }
       },
-      {
-        // http://localhost:8080/#/create
-        path: 'create',
-        name: 'CreateTask',
-        component: CreateTask,
-        meta:{
-          requiresAuth: true
-        }
-      }
     ],
     meta:{
       requiresAuth: true
