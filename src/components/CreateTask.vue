@@ -72,7 +72,7 @@ export default {
     methods: {
       addTask(){
         fb.taskCollection.doc().set({
-          titulo: name,
+          titulo: this.name,
           descripcion: this.description,
           estado: this.selected
         });
