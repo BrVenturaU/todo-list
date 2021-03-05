@@ -9,19 +9,9 @@
             <b-navbar-nav>
                 <b-nav-item :to="{name:'Dashboard'}">Inicio</b-nav-item>
             </b-navbar-nav>
-            <b-navbar-nav>
-                <b-nav-item :to="{name:'EditTask'}">Editar</b-nav-item>
-            </b-navbar-nav>
-            <b-navbar-nav>
-                <b-nav-item :to="{name:'CreateTask'}">Tarea</b-nav-item>
-            </b-navbar-nav>
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-                <b-nav-form>
-                    <b-form-input size="sm" class="mr-sm-2" placeholder="Buscar"></b-form-input>
-                    <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
-                </b-nav-form>
                 <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
                 <template #button-content>
