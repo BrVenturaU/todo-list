@@ -21,21 +21,7 @@
                         rows="3" max-rows="6"></b-form-textarea>
                       </b-col>
                   </b-row>
-                  <b-row class="my-1"> 
-                    <b-col sm="2">
-                          <label>Estado: </label>
-                    </b-col>              
-                    <b-col sm="10">
-                          <b-form-radio-group
-                            v-model="selected"
-                            :options="options"
-                            class="mb-9"
-                            value-field="status"
-                            text-field="name"
-                          ></b-form-radio-group>
-                    </b-col>
-                  </b-row>
-                  <b-row>
+                  <b-row class="mt-4">
                     <b-col sm="10">
                         <b-button type="button" variant="primary" @click="addTask()">Crear tarea</b-button>
                       </b-col>
@@ -59,13 +45,7 @@ export default {
           //propiedades:
           //name --> titulo  ; description --> descripcion  ; selected --> estado
         name: '',
-        description: '',
-        //Insumos para mis radioButtoms
-        selected: false ,
-        options: [
-          { status:  true , name: 'Activa' },
-          { status:  false, name: 'Inactiva' }
-        ]
+        description: ''
       }
     },
     //agrega metodo para crear documentos en firestore
@@ -75,7 +55,7 @@ export default {
             await fb.taskCollection.doc().set({
             titulo: this.name,
             descripcion: this.description,
-            estado: this.selected
+            estado: false
           });
           this.$emit('createdTask', true);
         } catch (error) {

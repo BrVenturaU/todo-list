@@ -8,7 +8,7 @@
                 <b-button  v-b-modal="'modal-crear'" class="mx-auto">Crear Tarea</b-button>
 
                 <b-modal id="modal-crear" ref="modal-crear" hide-footer title="Crear Tarea" size="lg">
-                    <CreateTask @createdTask="createdTask" />
+                    <CreateTask @createdTask="hideModal('modal-crear')" />
                 </b-modal>
             </b-col>
         </div>
@@ -23,7 +23,24 @@
                                 <b-card-text>
                                     {{tarea.descripcion}}
                                 </b-card-text>
-                                <b-button href="#" variant="primary">Go somewhere</b-button>
+                                <b-button variant="primary" class="mr-2" v-b-modal="`modal-show-${tarea.id}`">
+                                    <b-icon icon="eye"></b-icon>
+                                </b-button>
+
+                                <b-button variant="warning" class="text-white mr-2" v-b-modal="`modal-edit-${tarea.id}`">
+                                    <b-icon icon="pencil"></b-icon>
+                                </b-button>
+                                
+                                <b-button variant="success" v-if="!tarea.estado"
+                                    @click="checkTask(tarea)">
+                                    <b-icon icon="check-circle"></b-icon>
+                                </b-button>
+                                <b-modal :id="`modal-edit-${tarea.id}`" :ref="`modal-edit-${tarea.id}`" hide-footer :title="`Editar a: ${tarea.titulo}`" size="lg">
+                                    <EditTask />
+                                </b-modal>
+                                <b-modal :id="`modal-show-${tarea.id}`" :ref="`modal-show-${tarea.id}`" hide-footer :title="`Tarea: ${tarea.titulo}`" size="lg">
+                                    <ShowTask />
+                                </b-modal>
                             </b-card-body>
                         </b-col>
                     </b-row>
@@ -36,14 +53,19 @@
 <script>
 import {taskCollection} from '@/firebase/firebase'
 import CreateTask from './CreateTask.vue'
+import EditTask from './EditTask.vue'
+import ShowTask from './ShowTask.vue'
 export default {
     name:'Dashboard',
     components:{
-        CreateTask
+        CreateTask, 
+        EditTask,
+        ShowTask
     },
     data() {
         return {
-            tareas: []
+            tareas: [],
+            modalType: ''
         }
     },
     created(){
@@ -52,8 +74,25 @@ export default {
     computed:{
     },
     methods: {
-        async createdTask(){
-            this.$refs['modal-crear'].hide();
+        async checkTask(tarea){
+            try {
+                console.log(tarea)
+                await taskCollection.doc(tarea.id).set({
+                    titulo: tarea.titulo,
+                    descripcion: tarea.descripcion,
+                    estado: true
+                });
+                this.getTasks();
+            } catch (error) {
+                alert(`No se pudo actualizar a: ${tarea.titulo}`)
+                console.log(error.message);
+            }
+        },
+        showModal(ref){
+            this.$refs[ref].show();
+        },
+        async hideModal(ref){
+            this.$refs[ref].hide();
             await this.getTasks();
         },
         async getTasks(){

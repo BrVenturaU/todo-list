@@ -27,24 +27,6 @@ const routes = [
           requiresAuth: true
         }
       },
-      {
-        // http://localhost:8080/#/show/id (numero)
-        path: 'show/:id',
-        name: 'ShowTask',
-        component: ShowTask,
-        meta:{
-          requiresAuth: true
-        }
-      },
-      {
-        // http://localhost:8080/#/edit/id (numero)
-        path: 'edit/:id',
-        name: 'EditTask',
-        component: EditTask,
-        meta:{
-          requiresAuth: true
-        }
-      },
     ],
     meta:{
       requiresAuth: true
