@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import {auth} from '@/firebase/firebase'
 import Home from '@/views/Home.vue'
 import Dashboard from '@/components/Dashboard.vue'
 import ShowTask from '@/components/ShowTask.vue'
@@ -23,30 +24,40 @@ const routes = [
         path: '',
         name: 'Dashboard',
         component: Dashboard,
+        meta:{
+          requiresAuth: true
+        }
       },
       {
         // http://localhost:8080/#/show/id (numero)
         path: 'show/:id',
         name: 'ShowTask',
         component: ShowTask,
+        meta:{
+          requiresAuth: true
+        }
       },
       {
         // http://localhost:8080/#/edit/id (numero)
         path: 'edit/:id',
         name: 'EditTask',
         component: EditTask,
+        meta:{
+          requiresAuth: true
+        }
       },
       {
         // http://localhost:8080/#/create
         path: 'create',
         name: 'CreateTask',
         component: CreateTask,
+        meta:{
+          requiresAuth: true
+        }
       }
     ],
     meta:{
-      middleware:[
-
-      ]
+      requiresAuth: true
     }
   },
   {
@@ -66,18 +77,24 @@ const routes = [
         name: 'Register',
         component: Register,
       }
-    ],
-    meta:{
-      middleware:[
-
-      ]
-    }
+    ]
   }
   
 ]
 
 const router = new VueRouter({
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+  // console.log(requiresAuth)
+  // console.log(auth.currentUser)
+  if (requiresAuth && !auth.currentUser) {
+    next('/auth')
+  } else {
+    next()
+  }
 })
 
 export default router

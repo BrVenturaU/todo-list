@@ -30,7 +30,17 @@ export default{
         async getUserProfile({commit}, uid){
             const user = await fb.usersCollection.doc(uid).get();
             commit('SET_USER_PROFILE', user.data());
-            router.replace({name: 'Home'});
+            router.replace({name:'Dashboard'});
+        },
+        async logout({commit}){
+            try {
+                await fb.auth.signOut();
+                
+                commit('SET_USER_PROFILE', {});
+                router.replace({name:'Login'});
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
 }
