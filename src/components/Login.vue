@@ -43,6 +43,7 @@
                         </b-form-group>
                         <div class="text-center">
                             <b-button type="submit" variant="primary" class="mr-3">Iniciar Sesión</b-button>
+                            <b-button variant="success" class="mr-3" @click="createAccount">Crear Cuenta</b-button>
                             <b-button type="reset" variant="danger">Cancelar</b-button>
                         </div>
                     </b-form>
@@ -68,6 +69,9 @@ export default {
 
     methods:{
         ...mapActions('users', ['getUserProfile']),
+        createAccount(){
+            this.$router.replace({name:'Register'})
+        },
         registrar(){
             let vm = this
             firebase.auth().signInWithEmailAndPassword(vm.usuario, vm.password)

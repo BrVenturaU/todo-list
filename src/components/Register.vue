@@ -56,6 +56,7 @@
                         </b-form-group>
                         <div class="text-center">
                             <b-button type="submit" variant="primary" class="mr-3">Crear</b-button>
+                            <b-button variant="success" class="mr-3" @click="login">Iniciar Sesión</b-button>
                             <b-button type="reset" variant="danger">Cancelar</b-button>
                         </div>
                     </b-form>
@@ -83,6 +84,9 @@ export default {
     },
     methods:{
         ...mapActions('users', ['createUser']),
+        login(){
+            this.$router.replace({name:'Login'})
+        },
         registerUser(){
             console.log(this.user.email)
             this.createUser(this.user);
